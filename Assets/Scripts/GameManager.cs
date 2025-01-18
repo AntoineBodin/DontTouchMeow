@@ -56,7 +56,7 @@ namespace Assets.Scripts
             if (IsSequencePlaying) return;
 
             SimonsManager simonsManager = new SimonsManager();
-            SimonSequence sequence = simonsManager.GenerateSequence(5, 3);
+            SimonSequence sequence = SimonsManager.GenerateSequence(5, 3);
             StartCoroutine(simonsManager.PlaySequenceCoroutine(sequence));
         }
 
