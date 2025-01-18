@@ -3,7 +3,7 @@
     public enum SimonInputDirection
     {
         UP,
-        DOMW,
+        DOWN,
         LEFT,
         RIGHT
     }

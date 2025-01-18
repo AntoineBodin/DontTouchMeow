@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.Simons;
-using System;
+﻿using System;
+using Assets.Scripts.Simons;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +10,9 @@ namespace Assets.Scripts
         public static GameManager Instance { get; private set; }
         public GameStatus Status { get; set; }
 
-        void Awake()
+        public bool IsSequencePlaying { get; private set; }
+
+        public void Awake()
         {
             if (Instance == null)
             {
@@ -49,14 +51,18 @@ namespace Assets.Scripts
             throw new NotImplementedException();
         }
 
+        public void StartSequence()
+        {
+            if (IsSequencePlaying) return;
+
+            SimonsManager simonsManager = new SimonsManager();
+            SimonSequence sequence = simonsManager.GenerateSequence(5, 3);
+            StartCoroutine(simonsManager.PlaySequenceCoroutine(sequence));
+        }
+
         private void GoBackToStartMenu()
         {
             SceneManager.LoadScene("StartMenu");
-        }
-
-        private void Start()
-        {
-            SceneManager.LoadScene("Game");
         }
     }
 }

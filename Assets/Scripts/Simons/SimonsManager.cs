@@ -1,10 +1,11 @@
 using Assets.Scripts;
 using Assets.Scripts.Simons;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Android;
 
-public class SimonsManager : MonoBehaviour
+public class SimonsManager
 {
     public static SimonSequence GenerateNextSimonSequence(GameStatus status)
     {
@@ -48,5 +49,32 @@ public class SimonsManager : MonoBehaviour
         }
 
         return sequence;
+    }
+
+    public IEnumerator PlaySequenceCoroutine(SimonSequence sequence)
+    {
+        foreach (SimonInput input in sequence.Inputs)
+        {
+            switch (input.Direction)
+            {
+                case SimonInputDirection.UP:
+                    InputManager.Instance.SwipeStart(new Vector2(0, -2));
+                    InputManager.Instance.Swipe(new Vector2(0, 2));
+                    break;
+                case SimonInputDirection.DOWN:
+                    InputManager.Instance.SwipeStart(new Vector2(0, 2));
+                    InputManager.Instance.Swipe(new Vector2(0, -2));
+                    break;
+                case SimonInputDirection.RIGHT:
+                    InputManager.Instance.SwipeStart(new Vector2(-2, 1));
+                    InputManager.Instance.Swipe(new Vector2(2, 1));
+                    break;
+                case SimonInputDirection.LEFT:
+                    InputManager.Instance.SwipeStart(new Vector2(2, 1));
+                    InputManager.Instance.Swipe(new Vector2(-2, 1));
+                    break;
+            }
+            yield return new WaitForSeconds(0.3f); // wait for 100 milliseconds
+        }
     }
 }
