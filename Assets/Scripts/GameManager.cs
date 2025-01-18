@@ -1,9 +1,5 @@
 ﻿using Assets.Scripts.Simons;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,57 +26,22 @@ namespace Assets.Scripts
 
         public SimonSequence GenerateNextSimonSequence()
         {
-            int inputCount = 0;
-            float inputDuration = 1.2f;
-
-            switch (Status.CurrentState)
-            {
-                case MeowState.CALM:
-                    inputCount = 2 + Status.Step;
-                    inputDuration = 1.2f;
-                    break;
-                case MeowState.ANGRY:
-                    inputCount = 8;
-                    inputDuration = 1.2f - 0.05f * Status.Step;
-                    break;
-                case MeowState.XTRA_ANGRY:
-                    inputCount = 8 + Status.Step;
-                    inputDuration = 0.8f - 0.07f * Status.Step;
-                    break;
-            }
-
-            return SimonsManager.GenerateSequence(inputCount, inputDuration);
+            return SimonsManager.GenerateNextSimonSequence(Status);
         }
 
         public void CalmMeow()
         {
-            switch (Status.CurrentState)
+            var hasLost = Status.GoToLastCheckpoint();
+
+            if (hasLost)
             {
-                case MeowState.CALM:
-                    break;
-                case MeowState.ANGRY:
-                    Status.CurrentState = MeowState.CALM;
-                    break;
-                case MeowState.XTRA_ANGRY:
-                    Status.CurrentState = MeowState.ANGRY;
-                    break;
+                GameOver();
             }
         }
 
         public void PetMeow()
         {
-            switch (Status.CurrentState)
-            {
-                case MeowState.CALM:
-                    Status.CurrentState = MeowState.ANGRY;
-                    break;
-                case MeowState.ANGRY:
-                    Status.CurrentState = MeowState.XTRA_ANGRY;
-                    break;
-                case MeowState.XTRA_ANGRY:
-                    GameOver();
-                    break;
-            }
+            var hasWon = Status.GoToNextStep();
         }
 
         internal void GameOver()
