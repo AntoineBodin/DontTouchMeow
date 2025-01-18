@@ -16,7 +16,7 @@ namespace Assets.Scripts
         private int _moveCount = 0;
         private SimonSequence _currentSequence;
 
-        public Image image;
+        private Image image;
 
         public void Awake()
         {
@@ -26,10 +26,22 @@ namespace Assets.Scripts
                 DontDestroyOnLoad(gameObject);
             }
         }
-
+        private void Start()
+        {
+        }
         public async void StartGame()
         {
             await SceneManager.LoadSceneAsync("Game");
+            image = GameObject.Find("Main Image").GetComponent<Image>();
+
+
+            StartCoroutine(WaitFor2SecondsBeforePlaying());
+        }
+
+        private IEnumerator WaitFor2SecondsBeforePlaying()
+        {
+            yield return new WaitForSeconds(2);
+            Debug.Log("Start Game");
             PlayRound();
         }
 
@@ -59,11 +71,21 @@ namespace Assets.Scripts
                 yield return new WaitForSeconds(0);
             }
 
-            image.sprite = Resources.Load<Sprite>("Sprites/pet");
-            yield return new WaitForSeconds(0.5f);
-            image.sprite = Resources.Load<Sprite>("Sprites/pet");
-            yield return new WaitForSeconds(0.5f);
+            Sprite baseImage = SpriteManager.Instance.GetBase(Status);
+            Sprite dodgeImage = SpriteManager.Instance.GetDodge(Status);
+            Sprite downImage = SpriteManager.Instance.GetDown(Status);
 
+
+            int test = UnityEngine.Random.Range(0, 2);
+            if (test == 0)
+            {
+                yield return Animate(baseImage, dodgeImage);
+            }
+            else
+            {
+                yield return Animate(baseImage, downImage);
+            }
+            
             PlayRound();
         }
 
@@ -73,16 +95,30 @@ namespace Assets.Scripts
 
             if (hasWon)
             {
-                //WIN => display winning screen
+                Win();
                 yield return new WaitForSeconds(0);
             }
 
-            image.sprite = Resources.Load<Sprite>("Sprites/pet");
-            yield return new WaitForSeconds(0.5f);
-            image.sprite = Resources.Load<Sprite>("Sprites/pet");
-            yield return new WaitForSeconds(0.5f);
+            Sprite baseImage = SpriteManager.Instance.GetBase(Status);
+            Sprite petImage = SpriteManager.Instance.GetPet(Status);
+
+            yield return Animate(baseImage, petImage);
 
             PlayRound();
+        }
+
+        private void Win()
+        {
+            image.sprite = SpriteManager.Instance.WinImage;
+        }
+
+        private IEnumerator Animate(Sprite image1, Sprite image2)
+        {
+            image.sprite = image1;
+            yield return new WaitForSeconds(0.5f);
+            image.sprite = image2;
+            yield return new WaitForSeconds(0.5f);
+            image.sprite = image1;
         }
 
         private void ResetMoveCount()
@@ -92,7 +128,7 @@ namespace Assets.Scripts
 
         internal void GameOver()
         {
-            throw new NotImplementedException();
+            image.sprite = SpriteManager.Instance.LoseImage;
         }
 
         public void StartSequence(SimonSequence sequence)

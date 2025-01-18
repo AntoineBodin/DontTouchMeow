@@ -33,6 +33,7 @@ public class InputManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     private void Start()
     {
         swipeIndicator = new SwipeIndicator(sphere);
+        Debug.Log("SwipeIndicator created!");
         SwipeEnd();
     }
 

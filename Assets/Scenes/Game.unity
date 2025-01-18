@@ -348,6 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d15622b8c69ba2b4283dbc29160d54ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
 --- !u!4 &357445748
 Transform:
   m_ObjectHideFlags: 0
@@ -828,6 +829,66 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &1976273802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1976273804}
+  - component: {fileID: 1976273803}
+  m_Layer: 0
+  m_Name: SpriteManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1976273803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976273802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 795975d49b4034a48b7052846d958302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CalmMeow: {fileID: 21300000, guid: 4b1bd7452d67d4fd89f3629fe7fcb1b6, type: 3}
+  CalmMeowDodge: {fileID: 21300000, guid: 3f1b99116f1dc486583530c834e81f26, type: 3}
+  CalmMeowPet: {fileID: 21300000, guid: e849ccdb114d941b085fe06bdc68bb7c, type: 3}
+  CalmMeowDown: {fileID: 21300000, guid: 1de99d76d56054580a1e8068e467649b, type: 3}
+  AngryMeow: {fileID: 21300000, guid: 8e28d05774c604a528e71e31a919ff7f, type: 3}
+  AngryMeowDodge: {fileID: 21300000, guid: 28cd69a053be042e280b68770052156b, type: 3}
+  AngryMeowPet: {fileID: 21300000, guid: e849ccdb114d941b085fe06bdc68bb7c, type: 3}
+  AngryMeowDown: {fileID: 21300000, guid: 0f71250e450e5465b9da3c67924c2e0d, type: 3}
+  XtraAngryMeow: {fileID: 21300000, guid: a46c7f9dac73e40e5bd7b923a366450d, type: 3}
+  XtraAngryMeowDodge: {fileID: 21300000, guid: 6eee84ce2812d4145a399d2dfbdbee22, type: 3}
+  XtraAngryMeowPet: {fileID: 21300000, guid: 64fbd98c7d1ba42e4a385b6cb41c2b06, type: 3}
+  XtraAngryMeowDown: {fileID: 21300000, guid: 19f3f7c38ef6746caa1aff88c294e347, type: 3}
+  WinImage: {fileID: 21300000, guid: d1e893775867843ebae905374cf13fb8, type: 3}
+  LoseImage: {fileID: 21300000, guid: ad2cb327f5f7d4cfcadb82f634c76b37, type: 3}
+  WinImageText: {fileID: 21300000, guid: 80a5912a25bb7498888058ff319f6b79, type: 3}
+  LoseImageText: {fileID: 21300000, guid: 4a59c4372abed4b6b9bd06b4b83a5a73, type: 3}
+--- !u!4 &1976273804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976273802}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0475537, y: -0.9434109, z: -0.037736267}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1976857256
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,3 +1088,4 @@ SceneRoots:
   - {fileID: 751433703}
   - {fileID: 198548966}
   - {fileID: 357445748}
+  - {fileID: 1976273804}
