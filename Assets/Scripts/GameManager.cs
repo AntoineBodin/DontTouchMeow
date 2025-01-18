@@ -48,6 +48,9 @@ namespace Assets.Scripts
         private void PlayRound()
         {
             _currentSequence = GenerateNextSimonSequence();
+
+            _currentSequence.Inputs.ForEach(i => Debug.Log("Direction: " + i.Direction));
+
             StartSequence(_currentSequence);
         }
 
@@ -63,6 +66,8 @@ namespace Assets.Scripts
 
         public IEnumerator CalmMeow()
         {
+            ResetMoveCount();
+
             var hasLost = Status.GoToLastCheckpoint();
 
             if (hasLost)
@@ -91,6 +96,8 @@ namespace Assets.Scripts
 
         public IEnumerator PetMeow()
         {
+            ResetMoveCount();
+
             var hasWon = Status.GoToNextStep();
 
             if (hasWon)
