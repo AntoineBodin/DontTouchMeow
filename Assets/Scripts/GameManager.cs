@@ -11,6 +11,7 @@ namespace Assets.Scripts
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
+        public GameStatus Status { get; set; }
 
         void Awake()
         {
@@ -18,6 +19,42 @@ namespace Assets.Scripts
             {
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
+            }
+        }
+
+        public void StartGame()
+        {
+
+        }
+
+        public void CalmMeow()
+        {
+            switch (Status.CurrentState)
+            {
+                case MeowState.CALM:
+                    break;
+                case MeowState.ANGRY:
+                    Status.CurrentState = MeowState.CALM;
+                    break;
+                case MeowState.XTRA_ANGRY:
+                    Status.CurrentState = MeowState.ANGRY;
+                    break;
+            }
+        }
+
+        public void PetMeow()
+        {
+            switch (Status.CurrentState)
+            {
+                case MeowState.CALM:
+                    Status.CurrentState = MeowState.ANGRY;
+                    break;
+                case MeowState.ANGRY:
+                    Status.CurrentState = MeowState.XTRA_ANGRY;
+                    break;
+                case MeowState.XTRA_ANGRY:
+                    GameOver();
+                    break;
             }
         }
 
