@@ -3,6 +3,7 @@ using System.Collections;
 using Assets.Scripts.Simons;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -11,9 +12,11 @@ namespace Assets.Scripts
         public static GameManager Instance { get; private set; }
         public GameStatus Status { get; set; } = new GameStatus();
         public bool IsSequencePlaying { get; private set; }
-        
+
         private int _moveCount = 0;
         private SimonSequence _currentSequence;
+
+        public Image image;
 
         public void Awake()
         {
@@ -46,28 +49,38 @@ namespace Assets.Scripts
             return SimonsManager.GenerateNextSimonSequence(Status);
         }
 
-        public void CalmMeow()
+        public IEnumerator CalmMeow()
         {
-            ResetMoveCount();
             var hasLost = Status.GoToLastCheckpoint();
 
             if (hasLost)
             {
                 GameOver();
+                yield return new WaitForSeconds(0);
             }
+
+            image.sprite = Resources.Load<Sprite>("Sprites/pet");
+            yield return new WaitForSeconds(0.5f);
+            image.sprite = Resources.Load<Sprite>("Sprites/pet");
+            yield return new WaitForSeconds(0.5f);
 
             PlayRound();
         }
 
-        public void PetMeow()
+        public IEnumerator PetMeow()
         {
-            ResetMoveCount();
             var hasWon = Status.GoToNextStep();
 
             if (hasWon)
             {
                 //WIN => display winning screen
+                yield return new WaitForSeconds(0);
             }
+
+            image.sprite = Resources.Load<Sprite>("Sprites/pet");
+            yield return new WaitForSeconds(0.5f);
+            image.sprite = Resources.Load<Sprite>("Sprites/pet");
+            yield return new WaitForSeconds(0.5f);
 
             PlayRound();
         }
@@ -104,13 +117,14 @@ namespace Assets.Scripts
                 _moveCount++;
                 if (_moveCount == _currentSequence.Inputs.Count)
                 {
-                    PetMeow();
+                    StartCoroutine(PetMeow());
                 }
             }
             else
             {
-                CalmMeow();
+                StartCoroutine(CalmMeow());
             }
         }
     }
+
 }
