@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Don´t touch Meow.sln"
+    "dotnet.defaultSolution": "DontTouchMeow.sln"
 }
