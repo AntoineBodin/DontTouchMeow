@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SimonsManager : MonoBehaviour
 {
-    public SimonSequence GenerateSequence(int length, int inputDuration)
+    public static SimonSequence GenerateSequence(int length, float inputDuration)
     {
         SimonSequence sequence = new()
         {

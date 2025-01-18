@@ -10,5 +10,6 @@ namespace Assets.Scripts
     public class GameStatus
     {
         public MeowState CurrentState { get; set; }
+        public int Step { get; set; }
     }
 }
