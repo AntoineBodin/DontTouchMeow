@@ -12,6 +12,12 @@ namespace Assets.Scripts
         public MeowState CurrentState { get; set; } = MeowState.CALM;
         public int Step { get; set; } = 0;
 
+        public GameStatus()
+        {
+            CurrentState = MeowState.CALM;
+            Step = 0;
+        }
+
         internal bool GoToLastCheckpoint()
         {
             if (CurrentState == MeowState.CALM) 

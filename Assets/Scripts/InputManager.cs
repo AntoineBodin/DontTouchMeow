@@ -1,17 +1,16 @@
 using Assets.Scripts;
+using Assets.Scripts.Simons;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    public enum Direction { Left, Up, Right, Down, None }
-
     public static InputManager Instance { get; private set; }
 
     public GameObject sphere;
     public RectTransform panelTransform;
     SwipeIndicator swipeIndicator;
-    Direction direction;
+    SimonInputDirection direction;
     Vector2 startPos, endPos;
     public float swipeThreshold = 100f;
     bool draggingStarted;
@@ -28,7 +27,7 @@ public class InputManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         }
 
         draggingStarted = false;
-        direction = Direction.None;
+        direction = SimonInputDirection.NONE;
     }
 
     private void Start()
@@ -77,16 +76,16 @@ public class InputManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
         {
             if (Mathf.Abs(difference.x) > Mathf.Abs(difference.y)) // Do horizontal swipe
             {
-                direction = difference.x > 0 ? Direction.Right : Direction.Left; // If greater than zero, then swipe to right.
+                direction = difference.x > 0 ? SimonInputDirection.RIGHT : SimonInputDirection.LEFT; // If greater than zero, then swipe to right.
             }
             else //Do vertical swipe
             {
-                direction = difference.y > 0 ? Direction.Up : Direction.Down; // If greater than zero, then swipe to up.
+                direction = difference.y > 0 ? SimonInputDirection.UP : SimonInputDirection.DOWN; // If greater than zero, then swipe to up.
             }
         }
         else
         {
-            direction = Direction.None;
+            direction = SimonInputDirection.NONE;
         }
 
         Swipe(Camera.main.ScreenToWorldPoint(new Vector3(endPos.x, endPos.y, 10)));
@@ -96,10 +95,11 @@ public class InputManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     {
         if (GameManager.Instance.IsSequencePlaying) return;
 
-        if (draggingStarted && direction != Direction.None)
+        if (draggingStarted && direction != SimonInputDirection.NONE)
         {
             //Do something with this direction data.
             Debug.Log("Swipe direction: " + direction);
+            GameManager.Instance.Move(direction);
             // @TODO: Call GameManager
         }
 
