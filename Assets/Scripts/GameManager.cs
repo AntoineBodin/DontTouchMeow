@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Assets.Scripts.Simons;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,7 +24,12 @@ namespace Assets.Scripts
 
         public void StartGame()
         {
+            SceneManager.LoadScene("Game");
+        }
 
+        private void GoBackToStartMenu()
+        {
+            SceneManager.LoadScene("StartMenu");
         }
 
         public SimonSequence GenerateNextSimonSequence()
@@ -51,18 +57,19 @@ namespace Assets.Scripts
             throw new NotImplementedException();
         }
 
-        public void StartSequence()
+        public void StartSequence(SimonSequence sequence)
         {
             if (IsSequencePlaying) return;
 
-            SimonsManager simonsManager = new SimonsManager();
-            SimonSequence sequence = SimonsManager.GenerateSequence(5, 3);
-            StartCoroutine(simonsManager.PlaySequenceCoroutine(sequence));
+            IsSequencePlaying = true;
+            StartCoroutine(PlaySequence(sequence));
         }
 
-        private void GoBackToStartMenu()
+        private IEnumerator PlaySequence(SimonSequence sequence)
         {
-            SceneManager.LoadScene("StartMenu");
+            IsSequencePlaying = true;
+            yield return StartCoroutine(SimonsManager.PlaySequenceCoroutine(sequence));
+            IsSequencePlaying = false;
         }
     }
 }

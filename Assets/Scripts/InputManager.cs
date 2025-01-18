@@ -35,8 +35,6 @@ public class InputManager : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
     {
         swipeIndicator = new SwipeIndicator(sphere);
         SwipeEnd();
-
-        GameManager.Instance.StartSequence();
     }
 
     public void SwipeStart()

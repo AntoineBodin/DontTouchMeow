@@ -51,30 +51,43 @@ public class SimonsManager
         return sequence;
     }
 
-    public IEnumerator PlaySequenceCoroutine(SimonSequence sequence)
+    public static IEnumerator PlaySequenceCoroutine(SimonSequence sequence)
     {
         foreach (SimonInput input in sequence.Inputs)
         {
             switch (input.Direction)
             {
                 case SimonInputDirection.UP:
-                    InputManager.Instance.SwipeStart(new Vector2(0, -2));
-                    InputManager.Instance.Swipe(new Vector2(0, 2));
+                    InputManager.Instance.SwipeStart(new Vector2(0, -4));
+                    yield return new WaitForSeconds(input.Duration / 4);
+                    InputManager.Instance.Swipe(new Vector2(0, -2));
+                    yield return new WaitForSeconds(input.Duration / 4);
+                    InputManager.Instance.Swipe(new Vector2(0, 0));
                     break;
                 case SimonInputDirection.DOWN:
-                    InputManager.Instance.SwipeStart(new Vector2(0, 2));
+                    InputManager.Instance.SwipeStart(new Vector2(0, 0));
+                    yield return new WaitForSeconds(input.Duration / 4);
                     InputManager.Instance.Swipe(new Vector2(0, -2));
+                    yield return new WaitForSeconds(input.Duration / 4);
+                    InputManager.Instance.Swipe(new Vector2(0, -4));
                     break;
                 case SimonInputDirection.RIGHT:
-                    InputManager.Instance.SwipeStart(new Vector2(-2, 1));
-                    InputManager.Instance.Swipe(new Vector2(2, 1));
+                    InputManager.Instance.SwipeStart(new Vector2(-2, -1));
+                    yield return new WaitForSeconds(input.Duration / 4);
+                    InputManager.Instance.Swipe(new Vector2(0, -1));
+                    yield return new WaitForSeconds(input.Duration / 4);
+                    InputManager.Instance.Swipe(new Vector2(2, -1));
                     break;
                 case SimonInputDirection.LEFT:
-                    InputManager.Instance.SwipeStart(new Vector2(2, 1));
-                    InputManager.Instance.Swipe(new Vector2(-2, 1));
+                    InputManager.Instance.SwipeStart(new Vector2(2, -1));
+                    yield return new WaitForSeconds(input.Duration / 4);
+                    InputManager.Instance.Swipe(new Vector2(0, -1));
+                    yield return new WaitForSeconds(input.Duration / 4);
+                    InputManager.Instance.Swipe(new Vector2(-2, -1));
                     break;
             }
-            yield return new WaitForSeconds(0.3f); // wait for 100 milliseconds
+            yield return new WaitForSeconds(input.Duration);
+            InputManager.Instance.SwipeEnd();
         }
     }
 }
